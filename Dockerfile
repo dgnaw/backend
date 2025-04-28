@@ -1,20 +1,20 @@
-# Base image nodejs
+# Use the official Node.js image from Docker Hub
 FROM node:18-alpine
 
-# Tạo thư mục app trong container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy file package.json trước để cài dependency
-COPY package.json ./
+# Copy package.json and package-lock.json (if exists) to the container
+COPY package.json package-lock.json* ./
 
-# Cài đặt dependencies
+# Install dependencies
 RUN npm install
 
-# Copy toàn bộ source code vào container
+# Copy the entire source code into the container
 COPY . .
 
-# Mở cổng 3000
+# Expose port 3000 to the outside world
 EXPOSE 3000
 
-# Command mặc định để chạy app
+# Command to run the application when the container starts
 CMD ["npm", "start"]
